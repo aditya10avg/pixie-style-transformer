@@ -1,4 +1,3 @@
-
 import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 
@@ -26,27 +25,38 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUpload, originalIm
   });
 
   return (
-    <div 
-      {...getRootProps()} 
-      className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors ${
-        isDragActive ? 'border-[#3a7ca5] bg-blue-50' : 'border-gray-300 hover:border-[#3a7ca5]'
-      }`}
-    >
-      <input {...getInputProps()} />
-      {originalImage ? (
-        <img 
-          src={originalImage} 
-          alt="Uploaded" 
-          className="max-h-64 mx-auto rounded-md object-contain" 
+    <div className="space-y-4">
+      <div className="border-2 border-dashed border-blue-300 rounded-xl p-8 hover:border-blue-400 
+                      transition-colors bg-blue-50/50 cursor-pointer">
+        <input
+          type="file"
+          onChange={onDrop}
+          accept="image/*"
+          className="hidden"
+          {...getRootProps()}
         />
-      ) : (
-        <div>
-          <p className="text-gray-600">
-            Drag & drop an image here, or click to select a file
-          </p>
-          <p className="text-sm text-gray-400 mt-2">
-            Supports JPEG, PNG, WebP (max 5MB)
-          </p>
+        <div className="text-center space-y-4">
+          <div className="text-blue-500">
+            <svg className="mx-auto h-12 w-12" /* ... svg path ... */ />
+          </div>
+          <div className="space-y-2">
+            <p className="text-gray-700 font-medium">
+              Drop your image here, or click to select
+            </p>
+            <p className="text-sm text-gray-500">
+              Supports JPG, PNG, WEBP (max 5MB)
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      {originalImage && (
+        <div className="p-4 bg-gray-50 rounded-xl border border-gray-100">
+          <img
+            src={originalImage}
+            alt="Original"
+            className="w-full h-auto rounded-lg shadow-md"
+          />
         </div>
       )}
     </div>

@@ -3,6 +3,7 @@ import ImageUploader from '@/components/ImageUploader';
 import TransformedImage from '@/components/TransformedImage';
 import { analyzeImageWithGPT4Vision, generateGhibliImage } from '@/services/openaiService';
 import { useToast } from "@/hooks/use-toast";
+import LoadingAnimation from '@/components/LoadingAnimation';
 
 const Index = () => {
   const [originalImage, setOriginalImage] = useState<string | null>(null);
@@ -48,33 +49,45 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#e6f3ff] flex flex-col items-center justify-center p-4">
-      <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-6">
-        <h1 className="text-2xl font-bold text-center mb-6 text-[#3a7ca5]">
-          Ghibli Art Style Transformer
+    <div className="min-h-screen bg-gradient-to-br from-[#f0f9ff] via-[#e0f2fe] to-[#fef3c7] p-8">
+      <div className="max-w-4xl mx-auto bg-white/90 rounded-2xl shadow-2xl p-8 backdrop-blur-md border border-white/20">
+        <h1 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] bg-clip-text text-transparent">
+          Image to Art Generator
         </h1>
         
-        <ImageUploader 
-          onImageUpload={handleImageUpload} 
-          originalImage={originalImage}
-        />
-        
-        {originalImage && (
-          <button
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-400"
-            onClick={handleTransform}
-            disabled={isLoading}
-          >
-            {isLoading ? 'Creating your Ghibli masterpiece... (this may take up to 30 seconds)' : 'Transform to Ghibli Style'}
-          </button>
-        )}
-        
-        {transformedImage && (
-          <TransformedImage 
-            transformedImage={transformedImage} 
+        <div className="space-y-8">
+          <ImageUploader 
+            onImageUpload={handleImageUpload} 
+            originalImage={originalImage}
           />
-        )}
+          
+          {originalImage && (
+            <button
+              className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-lg
+                       hover:from-blue-700 hover:to-blue-600 transform hover:scale-[1.02] transition-all
+                       disabled:from-gray-400 disabled:to-gray-300 disabled:cursor-not-allowed
+                       font-semibold shadow-lg"
+              onClick={handleTransform}
+              disabled={isLoading}
+            >
+              {isLoading ? 'Creating your masterpiece... (this may take up to 30 seconds)' : 'Transform to Art'}
+            </button>
+          )}
+          
+          {transformedImage && (
+            <div className="mt-8 p-4 bg-blue-50 rounded-xl border border-blue-100">
+              <TransformedImage 
+                transformedImage={transformedImage} 
+              />
+            </div>
+          )}
+        </div>
       </div>
+      {isLoading && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <LoadingAnimation />
+        </div>
+      )}
     </div>
   );
 };
