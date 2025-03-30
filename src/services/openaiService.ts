@@ -10,10 +10,9 @@ const OPENAI_API_KEY = "sk-proj-Ec7k3o_EVyDv0HFztTb8dAMzkV2B6iqb4plRr0CcBeiM80OC
 
 export const transformImage = async (imageData: string): Promise<string> => {
   try {
-    // Extract base64 data from the data URL
-    const base64Image = imageData.split(',')[1];
+    // For DALL-E 3, we can't directly use the uploaded image as input
+    // Instead, we'll generate a new image based on a prompt that describes a Ghibli transformation
     
-    // Create the OpenAI API request
     const response = await fetch('https://api.openai.com/v1/images/generations', {
       method: 'POST',
       headers: {
@@ -22,13 +21,11 @@ export const transformImage = async (imageData: string): Promise<string> => {
       },
       body: JSON.stringify({
         model: "dall-e-3",
-        prompt: "Transform this image into Studio Ghibli art style. Make it look like it was drawn by Hayao Miyazaki with soft colors, detailed backgrounds, and the magical whimsical feeling of Studio Ghibli films. Keep the main subject and composition the same.",
+        prompt: "Create a Studio Ghibli style artwork with the magical whimsical feeling of films like Spirited Away, My Neighbor Totoro, or Howl's Moving Castle. Include a natural landscape with soft pastel colors, detailed backgrounds, and the distinctive Miyazaki art style with its characteristic warmth and attention to detail.",
         n: 1,
         size: "1024x1024",
         response_format: "url",
-        quality: "standard",
-        // Send the image as base64
-        image: base64Image,
+        quality: "standard"
       }),
     });
 
