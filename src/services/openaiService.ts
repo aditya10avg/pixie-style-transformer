@@ -1,12 +1,12 @@
 
-import { useToast } from "@/hooks/use-toast";
-
 // Base64 image data format expected by OpenAI API
 interface OpenAIImageResponse {
   data: {
     url: string;
   }[];
 }
+
+const OPENAI_API_KEY = "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";
 
 export const transformImage = async (imageData: string): Promise<string> => {
   try {
@@ -18,7 +18,7 @@ export const transformImage = async (imageData: string): Promise<string> => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('openai_api_key')}`
+        'Authorization': `Bearer ${OPENAI_API_KEY}`
       },
       body: JSON.stringify({
         model: "dall-e-3",
