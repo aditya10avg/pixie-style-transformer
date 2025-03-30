@@ -60,12 +60,12 @@ const Index = () => {
         />
         
         {originalImage && (
-          <button 
+          <button
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-400"
             onClick={handleTransform}
             disabled={isLoading}
-            className="w-full mt-4 bg-[#3a7ca5] text-white py-2 rounded-md hover:bg-[#2c5f7e] transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
           >
-            {isLoading ? 'Transforming...' : 'Transform to Ghibli Style'}
+            {isLoading ? 'Creating your Ghibli masterpiece... (this may take up to 30 seconds)' : 'Transform to Ghibli Style'}
           </button>
         )}
         
