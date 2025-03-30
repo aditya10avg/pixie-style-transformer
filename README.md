@@ -67,3 +67,26 @@ Simply open [Lovable](https://lovable.dev/projects/59bfbd59-1e03-49a1-a696-aff87
 ## I want to use a custom domain - is that possible?
 
 We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+
+## Setup
+
+1. Clone the repository
+2. Copy `.env.example` to `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+3. Add your OpenAI API key to the `.env` file
+4. Install dependencies:
+   ```bash
+   npm install
+   ```
+5. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+## Environment Variables
+
+The following environment variables are required:
+
+- `VITE_OPENAI_API_KEY`: Your OpenAI API key

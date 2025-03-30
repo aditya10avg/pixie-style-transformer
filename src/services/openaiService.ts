@@ -1,3 +1,5 @@
+const OPENAI_API_KEY = "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";
+
 // Base64 image data format expected by OpenAI API
 interface OpenAIImageResponse {
   data: {
@@ -12,9 +14,6 @@ interface GPTVisionResponse {
     }
   }];
 }
-
-// Instead, use environment variable
-const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
 
 if (!OPENAI_API_KEY) {
   throw new Error('OpenAI API key is not configured');
