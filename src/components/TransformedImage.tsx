@@ -1,33 +1,51 @@
-
 import React from 'react';
-import { Download } from 'lucide-react';
 
 interface TransformedImageProps {
   transformedImage: string;
 }
 
 const TransformedImage: React.FC<TransformedImageProps> = ({ transformedImage }) => {
-  const handleDownload = () => {
-    const link = document.createElement('a');
-    link.href = transformedImage;
-    link.download = 'ghibli_transformed_image.png';
-    link.click();
+  const handleDownload = async () => {
+    try {
+      // Fetch the image
+      const response = await fetch(transformedImage);
+      const blob = await response.blob();
+      
+      // Create a download link
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      
+      // Set filename with timestamp
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+      link.download = `transformed-art-${timestamp}.png`;
+      
+      // Trigger download
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      // Cleanup
+      window.URL.revokeObjectURL(downloadUrl);
+    } catch (error) {
+      console.error('Error downloading image:', error);
+    }
   };
 
   return (
-    <div className="mt-6">
-      <div className="border rounded-lg overflow-hidden shadow-md">
-        <img 
-          src={transformedImage} 
-          alt="Ghibli Style Transformed" 
-          className="w-full max-h-[400px] object-contain"
-        />
-      </div>
-      <button 
+    <div className="space-y-4">
+      <img 
+        src={transformedImage} 
+        alt="Transformed" 
+        className="w-full h-auto rounded-lg shadow-lg"
+      />
+      <button
         onClick={handleDownload}
-        className="w-full mt-4 flex items-center justify-center bg-[#3a7ca5] text-white py-2 rounded-md hover:bg-[#2c5f7e] transition-colors"
+        className="w-full px-6 py-3 bg-gradient-to-r from-green-600 to-green-500 
+                 text-white rounded-lg hover:from-green-700 hover:to-green-600 
+                 transform hover:scale-[1.02] transition-all font-semibold shadow-lg"
       >
-        <Download className="mr-2" /> Download Transformed Image
+        Download Transformed Image
       </button>
     </div>
   );
